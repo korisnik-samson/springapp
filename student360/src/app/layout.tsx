@@ -4,6 +4,9 @@ import "./globals.css";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { NextFont, NextFontWithVariable } from "next/dist/compiled/@next/font";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
+import NavBar from "@/components/NavBar";
 
 const fontSans: NextFontWithVariable = FontSans({
     subsets: ["latin"],
@@ -21,7 +24,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
             <body className={cn(fontSans.className, inter)}>
-                {children}
+                <ThemeProvider attribute="class" defaultTheme='system' enableSystem disableTransitionOnChange>
+                    <Toaster />
+                    <NavBar />
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
