@@ -1,6 +1,10 @@
 package org.example.webserver.components.task;
 
 import jakarta.persistence.*;
+import org.example.webserver.components.subtask.SubtaskModel;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "task")
 public class TaskModel {
@@ -8,6 +12,8 @@ public class TaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private int id;
+
+    // TODO: Create filed for ProjectModel Relationship
 
     @Column(name = "title")
     private String title;
@@ -29,6 +35,9 @@ public class TaskModel {
 
     @Column(name = "actual_hours")
     private int actualHours;
+
+    @OneToMany(mappedBy = "task")
+    private Set<SubtaskModel> subtasks = new HashSet<>();
 
     // TODO: Create fields for all existing Relationships
 
@@ -57,6 +66,8 @@ public class TaskModel {
 
     public int getActualHours() { return actualHours; }
     public void setActualHours(int actualHours) { this.actualHours = actualHours; }
+
+    public Set<SubtaskModel> getSubtasks() { return Set.copyOf(subtasks); }
 
     @Override
     public String toString() {
