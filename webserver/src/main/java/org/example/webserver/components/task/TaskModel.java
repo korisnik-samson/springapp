@@ -30,6 +30,8 @@ public class TaskModel {
     @Column(name = "actual_hours")
     private int actualHours;
 
+    // TODO: Create fields for all existing Relationships
+
     public TaskModel() {}
 
     public int getId() { return id; }
