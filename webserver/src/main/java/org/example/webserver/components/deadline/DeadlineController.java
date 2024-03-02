@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DependencyController {
+public class DeadlineController {
 
-    private final DependencyService dependencyService;
+    private final DeadlineService deadlineService;
 
     @Autowired
-    public DependencyController(DependencyService dependencyService) {
-        this.dependencyService = dependencyService;
+    public DeadlineController(DeadlineService deadlineService) {
+        this.deadlineService = deadlineService;
     }
 
 }
