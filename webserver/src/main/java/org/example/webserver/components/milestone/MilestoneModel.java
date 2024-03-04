@@ -1,15 +1,22 @@
 package org.example.webserver.components.milestone;
 
 import jakarta.persistence.*;
+import org.example.webserver.components.project.ProjectModel;
+
+import java.util.Set;
 
 @Entity(name = "milestone")
 public class MilestoneModel {
+    private enum MilestoneStatus { IN_PROGRESS, COMPLETED, AT_RISK, }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "milestone_id")
     private int id;
 
-    // TODO: implement relationship for project_id
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private ProjectModel project;
 
     @Column(name = "milestone_name")
     private String milestoneName;
@@ -18,7 +25,8 @@ public class MilestoneModel {
     private String milestoneDueDate;
 
     @Column(name = "milestone_status")
-    private String milestoneStatus;
+    @Enumerated(EnumType.STRING)
+    private MilestoneStatus milestoneStatus;
 
     public MilestoneModel() {}
 
@@ -31,8 +39,8 @@ public class MilestoneModel {
     public String getMilestoneDueDate() { return milestoneDueDate; }
     public void setMilestoneDueDate(String milestoneDueDate) { this.milestoneDueDate = milestoneDueDate; }
 
-    public String getMilestoneStatus() { return milestoneStatus; }
-    public void setMilestoneStatus(String milestoneStatus) { this.milestoneStatus = milestoneStatus; }
+    public MilestoneStatus getMilestoneStatus() { return milestoneStatus; }
+    public void setMilestoneStatus(String milestoneStatus) { this.milestoneStatus = MilestoneStatus.valueOf(milestoneStatus); }
 
     @Override
     public String toString() {

@@ -5,6 +5,12 @@ import org.example.webserver.components.task.TaskModel;
 
 @Entity(name = "dependency")
 public class DependencyModel {
+    private enum DependencyType {
+        FINISH_START,
+        FINISH_FINISH,
+        START_START,
+        START_FINISH,
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +24,23 @@ public class DependencyModel {
     // TODO: Implement relationship field for dependent_task_id
 
     @Column(name = "dependency_type")
-    private String dependencyType;
+    @Enumerated(EnumType.STRING)
+    private DependencyType dependencyType;
 
+    public DependencyModel() {}
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public TaskModel getTask() { return task; }
+    public void setTask(TaskModel task) { this.task = task; }
+
+    public DependencyType getDependencyType() { return dependencyType; }
+    public void setDependencyType(DependencyType dependencyType) { this.dependencyType = dependencyType; }
+
+    @Override
+    public String toString() {
+        return "DependencyModel{" + "id=" + id +
+                ", task=" + task + ", dependencyType='" + dependencyType + '\'' + '}';
+    }
 }

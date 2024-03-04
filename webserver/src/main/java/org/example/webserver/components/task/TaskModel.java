@@ -1,43 +1,69 @@
 package org.example.webserver.components.task;
 
 import jakarta.persistence.*;
+import org.example.webserver.components.project.ProjectModel;
 import org.example.webserver.components.subtask.SubtaskModel;
+import org.example.webserver.components.user.UserModel;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "task")
 public class TaskModel {
+    private enum TaskStatus {
+        NOT_STARTED,
+        IN_PROGRESS,
+        COMPLETED,
+        URGENT
+    }
+
+    private enum TaskPriority {
+        LOW,
+        MEDIUM,
+        HIGH,
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private int id;
 
-    // TODO: Create filed for ProjectModel Relationship
-
-    @Column(name = "title")
+    @Column(name = "task_title")
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "task_description")
     private String description;
 
     @Column(name = "assignee_id")
     private int assigneeId;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "task_status")
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
-    @Column(name = "due_date")
+    @Column(name = "task_due_date")
     private String dueDate;
 
-    @Column(name = "estimated_hours")
+    @Column(name = "task_estimated_hours")
     private int estimatedHours;
 
-    @Column(name = "actual_hours")
+    @Column(name = "task_actual_hours")
     private int actualHours;
 
     @OneToMany(mappedBy = "task")
     private Set<SubtaskModel> subtasks = new HashSet<>();
+
+    @ManyToMany(mappedBy = "tasks")
+    private Set<UserModel> users = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private ProjectModel project;
+
+    @Column(name = "task_priority")
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
+
 
     // TODO: Create fields for all existing Relationships
 
@@ -55,8 +81,8 @@ public class TaskModel {
     public int getAssigneeId() { return assigneeId; }
     public void setAssigneeId(int assigneeId) { this.assigneeId = assigneeId; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public TaskStatus getStatus() { return status; }
+    public void setStatus(String status) { this.status = TaskStatus.valueOf(status); }
 
     public String getDueDate() { return dueDate; }
     public void setDueDate(String dueDate) { this.dueDate = dueDate; }
@@ -66,6 +92,9 @@ public class TaskModel {
 
     public int getActualHours() { return actualHours; }
     public void setActualHours(int actualHours) { this.actualHours = actualHours; }
+
+    public TaskPriority getPriority() { return priority; }
+    public void setPriority(String priority) { this.priority = TaskPriority.valueOf(priority); }
 
     public Set<SubtaskModel> getSubtasks() { return Set.copyOf(subtasks); }
 
