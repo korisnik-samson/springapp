@@ -2,15 +2,10 @@ package org.example.webserver.components.deadline;
 
 import jakarta.persistence.*;
 import org.example.webserver.components.project.ProjectModel;
+import org.example.webserver.lib.types.DeadlineType;
 
 @Entity(name = "deadline")
 public class DeadlineModel {
-    private enum DeadlineType {
-        PROJECT_START,
-        PROJECT_END,
-        MAJOR,
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deadline_id")

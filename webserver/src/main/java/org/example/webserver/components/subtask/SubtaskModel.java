@@ -3,6 +3,7 @@ package org.example.webserver.components.subtask;
 import jakarta.persistence.*;
 import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.components.user.UserModel;
+import org.example.webserver.lib.types.SubtaskStatus;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,8 @@ public class SubtaskModel {
     private Set<UserModel> users = new HashSet<>();
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private SubtaskStatus status;
 
     public SubtaskModel() {}
 
@@ -48,8 +50,8 @@ public class SubtaskModel {
     public Set<UserModel> getUsers() { return Set.copyOf(users); }
     public void setUsers(Set<UserModel> users) { this.users = users; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public SubtaskStatus getStatus() { return status; }
+    public void setStatus(String status) { this.status = SubtaskStatus.valueOf(status); }
 
     @Override
     public String toString() {

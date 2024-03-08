@@ -17,12 +17,12 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping(path = "api/projects")
+    @GetMapping(path = "api/project")
     public List<ProjectModel> getProjects() {
         return this.projectService.getProjects();
     }
 
-    @GetMapping(path = "api/projects/{id}")
+    @GetMapping(path = "api/project/{id}")
     public Optional<ProjectModel> getProjectById(@PathVariable("id") int id) {
         return this.projectService.getProjectById(id);
     }

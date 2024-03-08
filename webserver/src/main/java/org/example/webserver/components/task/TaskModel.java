@@ -1,28 +1,20 @@
 package org.example.webserver.components.task;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.example.webserver.components.project.ProjectModel;
 import org.example.webserver.components.subtask.SubtaskModel;
 import org.example.webserver.components.user.UserModel;
+import org.example.webserver.lib.types.TaskPriority;
+import org.example.webserver.lib.types.TaskStatus;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "task")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TaskModel {
-    private enum TaskStatus {
-        NOT_STARTED,
-        IN_PROGRESS,
-        COMPLETED,
-        URGENT
-    }
-
-    private enum TaskPriority {
-        LOW,
-        MEDIUM,
-        HIGH,
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
@@ -33,9 +25,6 @@ public class TaskModel {
 
     @Column(name = "task_description")
     private String description;
-
-    @Column(name = "assignee_id")
-    private int assigneeId;
 
     @Column(name = "task_status")
     @Enumerated(EnumType.STRING)
@@ -64,7 +53,6 @@ public class TaskModel {
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
 
-
     // TODO: Create fields for all existing Relationships
 
     public TaskModel() {}
@@ -77,9 +65,6 @@ public class TaskModel {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-
-    public int getAssigneeId() { return assigneeId; }
-    public void setAssigneeId(int assigneeId) { this.assigneeId = assigneeId; }
 
     public TaskStatus getStatus() { return status; }
     public void setStatus(String status) { this.status = TaskStatus.valueOf(status); }
@@ -101,15 +86,17 @@ public class TaskModel {
     @Override
     public String toString() {
         return "TaskModel{" + "title='" + title + '\'' + ", id=" + id +
-                ", description='" + description + '\'' + ", assigneeId=" + assigneeId +
+                ", description='" + description + '\'' + ", assigneeId=" +
                 ", status='" + status + '\'' + ", dueDate='" + dueDate + '\'' +
                 ", estimatedHours=" + estimatedHours + ", actualHours=" + actualHours + '}';
     }
 
-    // determine if two tasks are equal
-    public boolean equals(TaskModel task) {
-        return this.id == task.id && this.title.equals(task.title) && this.description.equals(task.description) &&
-                this.assigneeId == task.assigneeId && this.status.equals(task.status) && this.dueDate.equals(task.dueDate) &&
-                this.estimatedHours == task.estimatedHours && this.actualHours == task.actualHours;
-    }
+    public Set<UserModel> getUsers() { return Set.copyOf(users); }
+    public void setUsers(Set<UserModel> users) { this.users = users; }
+
+    public ProjectModel getProject() { return project; }
+    public void setProject(ProjectModel project) { this.project = project; }
+
+    public void setSubtasks(Set<SubtaskModel> subtasks) { this.subtasks = subtasks; }
+
 }

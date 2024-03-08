@@ -2,13 +2,10 @@ package org.example.webserver.components.milestone;
 
 import jakarta.persistence.*;
 import org.example.webserver.components.project.ProjectModel;
-
-import java.util.Set;
+import org.example.webserver.lib.types.MilestoneStatus;
 
 @Entity(name = "milestone")
 public class MilestoneModel {
-    private enum MilestoneStatus { IN_PROGRESS, COMPLETED, AT_RISK, }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "milestone_id")
