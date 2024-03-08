@@ -9,6 +9,7 @@ import org.example.webserver.components.user.UserModel;
 import org.example.webserver.lib.types.TaskPriority;
 import org.example.webserver.lib.types.TaskStatus;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,8 +31,11 @@ public class TaskModel {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
+    @Column(name = "task_start_date")
+    private Date startDate;
+
     @Column(name = "task_due_date")
-    private String dueDate;
+    private Date dueDate;
 
     @Column(name = "task_estimated_hours")
     private int estimatedHours;
@@ -66,11 +70,14 @@ public class TaskModel {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public TaskStatus getStatus() { return status; }
+    public String getStatus() { return status.toString(); }
     public void setStatus(String status) { this.status = TaskStatus.valueOf(status); }
 
-    public String getDueDate() { return dueDate; }
-    public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+    public String getStartDate() { return startDate.toString(); }
+    public void setStartDate(String startDate) { this.startDate = Date.valueOf(startDate); }
+
+    public String getDueDate() { return dueDate.toString(); }
+    public void setDueDate(String dueDate) { this.dueDate = Date.valueOf(dueDate); }
 
     public int getEstimatedHours() { return estimatedHours; }
     public void setEstimatedHours(int estimatedHours) { this.estimatedHours = estimatedHours; }
@@ -78,17 +85,16 @@ public class TaskModel {
     public int getActualHours() { return actualHours; }
     public void setActualHours(int actualHours) { this.actualHours = actualHours; }
 
-    public TaskPriority getPriority() { return priority; }
+    public String getPriority() { return priority.toString(); }
     public void setPriority(String priority) { this.priority = TaskPriority.valueOf(priority); }
 
     public Set<SubtaskModel> getSubtasks() { return Set.copyOf(subtasks); }
 
     @Override
     public String toString() {
-        return "TaskModel{" + "title='" + title + '\'' + ", id=" + id +
-                ", description='" + description + '\'' + ", assigneeId=" +
-                ", status='" + status + '\'' + ", dueDate='" + dueDate + '\'' +
-                ", estimatedHours=" + estimatedHours + ", actualHours=" + actualHours + '}';
+        return "TaskModel{" + "id=" + id + ", title='" + title + '\'' + ", description='" + description + '\'' +
+                ", status=" + status + ", startDate=" + startDate + ", dueDate=" + dueDate + ", estimatedHours=" +
+                estimatedHours + ", actualHours=" + actualHours + ", priority=" + priority + '}';
     }
 
     public Set<UserModel> getUsers() { return Set.copyOf(users); }
