@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserModel, Integer> {
     @Query(value = "SELECT * FROM user WHERE user_name = :userName", nativeQuery = true)
-    Optional<UserModel> findByUserName(String userName);
+    Optional<UserModel> findByUserName(@Param("userName") String userName);
 
     @Query(value = "SELECT * FROM user WHERE user_role = :role", nativeQuery = true)
-    List<UserModel> findByRole(String role);
+    List<UserModel> findByRole(@Param("role") String role);
 
     @Modifying
     @Query(value = "UPDATE user SET first_name = :firstName, last_name = :lastName, user_name = :userName, " +

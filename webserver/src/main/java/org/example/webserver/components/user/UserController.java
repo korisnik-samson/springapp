@@ -21,17 +21,17 @@ public class UserController {
         return this.userService.getUsers();
     }
 
-    @GetMapping(path = "api/user/{id}")
+    @GetMapping(path = "api/user?id={id}")
     public Optional<UserModel> getUserById(@PathVariable("id") int id) {
         return this.userService.getUserById(id);
     }
 
-    @GetMapping(path = "api/user/username/{userName}")
+    @GetMapping(path = "api/user?username={userName}")
     public Optional<UserModel> getUserByUserName(@PathVariable("userName") String userName) {
         return this.userService.getUserByUserName(userName);
     }
 
-    @GetMapping(path = "api/user/role/{role}")
+    @GetMapping(path = "api/user?role={role}")
     public List<UserModel> getUsersByRole(@PathVariable("role") String role) {
         return this.userService.getUsersByRole(role);
     }
@@ -61,7 +61,7 @@ public class UserController {
         return this.userService.findUsersByTask(taskId);
     }
 
-    @PutMapping(path = "api/user/task/{userId}/{taskId}")
+    @PostMapping(path = "api/user/task/{userId}/{taskId}")
     public void assignTask(@PathVariable("userId") int userId, @PathVariable("taskId") int taskId) {
         this.userService.assignTask(userId, taskId);
     }

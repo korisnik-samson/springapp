@@ -60,11 +60,17 @@ public class UserService {
     }
 
     public List<UserModel> getMembers() {
-        return this.userRepository.findMembers();
+        List<UserModel> members = this.userRepository.findMembers();
+        members.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+
+        return members;
     }
 
     public List<UserModel> getManagers() {
-        return this.userRepository.findManagers();
+        List<UserModel> managers = this.userRepository.findManagers();
+        managers.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+
+        return managers;
     }
 
     @Transactional
