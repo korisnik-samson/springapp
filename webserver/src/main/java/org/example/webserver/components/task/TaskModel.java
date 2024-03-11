@@ -8,6 +8,7 @@ import org.example.webserver.components.subtask.SubtaskModel;
 import org.example.webserver.components.user.UserModel;
 import org.example.webserver.lib.types.TaskPriority;
 import org.example.webserver.lib.types.TaskStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 import java.util.HashSet;
@@ -32,9 +33,11 @@ public class TaskModel {
     private TaskStatus status;
 
     @Column(name = "task_start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "task_due_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
 
     @Column(name = "task_estimated_hours")
@@ -70,8 +73,8 @@ public class TaskModel {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getStatus() { return status.toString(); }
-    public void setStatus(String status) { this.status = TaskStatus.valueOf(status); }
+    public TaskStatus getStatus() { return status; }
+    public void setStatus(TaskStatus status) { this.status = TaskStatus.valueOf(String.valueOf(status)); }
 
     public String getStartDate() { return startDate.toString(); }
     public void setStartDate(String startDate) { this.startDate = Date.valueOf(startDate); }
@@ -85,10 +88,11 @@ public class TaskModel {
     public int getActualHours() { return actualHours; }
     public void setActualHours(int actualHours) { this.actualHours = actualHours; }
 
-    public String getPriority() { return priority.toString(); }
-    public void setPriority(String priority) { this.priority = TaskPriority.valueOf(priority); }
+    public TaskPriority getPriority() { return priority; }
+    public void setPriority(TaskPriority priority) { this.priority = TaskPriority.valueOf(String.valueOf(priority)); }
 
     public Set<SubtaskModel> getSubtasks() { return Set.copyOf(subtasks); }
+    public void setSubtasks(Set<SubtaskModel> subtasks) { this.subtasks = subtasks; }
 
     @Override
     public String toString() {
@@ -102,7 +106,4 @@ public class TaskModel {
 
     public ProjectModel getProject() { return project; }
     public void setProject(ProjectModel project) { this.project = project; }
-
-    public void setSubtasks(Set<SubtaskModel> subtasks) { this.subtasks = subtasks; }
-
 }

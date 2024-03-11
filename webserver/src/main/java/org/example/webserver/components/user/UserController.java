@@ -1,14 +1,17 @@
 package org.example.webserver.components.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 public class UserController {
     private final UserService userService;
 
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -56,5 +59,20 @@ public class UserController {
     @GetMapping(path = "api/user/task/{id}")
     public Optional<List<UserModel>> getUsersByTask(@PathVariable("id") int taskId) {
         return this.userService.findUsersByTask(taskId);
+    }
+
+    @PutMapping(path = "api/user/task/{userId}/{taskId}")
+    public void assignTask(@PathVariable("userId") int userId, @PathVariable("taskId") int taskId) {
+        this.userService.assignTask(userId, taskId);
+    }
+
+    @PutMapping(path = "api/user/{id}/action?=enable")
+    public void enableUser(@PathVariable("id") int id) {
+        this.userService.enableUser(id);
+    }
+
+    @PutMapping(path = "api/user/{id}/action?=disable")
+    public void disableUser(@PathVariable("id") int id) {
+        this.userService.disableUser(id);
     }
 }

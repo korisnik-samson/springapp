@@ -26,7 +26,7 @@ public class TaskService {
         return this.taskRepository.findTasksByUser(userId);
     }
 
-    public TaskModel addTask(TaskModel task) {
+    public TaskModel createTask(TaskModel task) {
         return this.taskRepository.save(task);
     }
 
@@ -70,9 +70,15 @@ public class TaskService {
         else finalTask.setActualHours(currentTask.get().getActualHours());
 
         int updatedRows = this.taskRepository.updateTask(finalTask.getId(), finalTask.getTitle(), finalTask.getDescription(),
-                finalTask.getStatus(), finalTask.getPriority(), finalTask.getStartDate(), finalTask.getDueDate(),
+                finalTask.getStatus().toString(), finalTask.getPriority().toString(), finalTask.getStartDate(), finalTask.getDueDate(),
                 finalTask.getEstimatedHours(), finalTask.getActualHours());
 
         return updatedRows > 0 ? "Task updated successfully" : "Error updating task";
     }
+
+    public void deleteTask(int id) {
+        this.taskRepository.deleteById(id);
+    }
+
+
 }

@@ -32,6 +32,15 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     List<UserModel> findManagers();
 
     @Modifying
-    @Query(value = "UPDATE user SET user.is_deleted = 'TRUE' WHERE user_id =: id", nativeQuery = true)
-    void invalidateUser(@Param("id") int id);
+    @Query(value = "UPDATE user SET user.is_deleted = 'TRUE' WHERE user_id = :id", nativeQuery = true)
+    void disableUser(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "UPDATE user SET user.is_deleted = 'FALSE' WHERE user.user_id = :id", nativeQuery = true)
+    void enableUser(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "INSERT INTO user_task (user_id, task_id) VALUES (:userId, :taskId)", nativeQuery = true)
+    void assignTask(@Param("userId") int userId, @Param("taskId") int taskId);
+
 }

@@ -42,7 +42,7 @@ public class UserModel {
     // TODO: Use this field to soft delete a user
     @Column(name = "is_deleted")
     @Enumerated(EnumType.STRING)
-    private IsUserDeleted isDeleted;
+    private IsUserDeleted isDeleted = IsUserDeleted.FALSE;
 
     @ManyToMany
     @JoinTable(
@@ -104,4 +104,7 @@ public class UserModel {
                 ", lastName='" + lastName + '\'' + ", name='" + name + '\'' +
                 ", email='" + email + '\'' + ", role='" + role + '\'' + '}';
     }
+
+    public void setIsDeleted(IsUserDeleted isUserDeleted) { this.isDeleted = isUserDeleted; }
+    public IsUserDeleted getIsDeleted() { return isDeleted; }
 }

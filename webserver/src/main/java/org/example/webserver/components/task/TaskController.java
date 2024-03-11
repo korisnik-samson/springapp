@@ -32,8 +32,8 @@ public class TaskController {
     }
 
     @PostMapping("api/task")
-    public TaskModel addTask(@RequestBody TaskModel task) {
-        return this.taskService.addTask(task);
+    public TaskModel createTask(@RequestBody TaskModel task) {
+        return this.taskService.createTask(task);
     }
 
     @PutMapping("api/task/{id}")

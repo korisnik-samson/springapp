@@ -8,4 +8,8 @@ public class SubtaskService {
     public SubtaskService(SubtaskRepository subtaskRepository) {
         this.subtaskRepository = subtaskRepository;
     }
+
+    public void createSubtask(Integer taskId, SubtaskModel subtaskModel) {
+        subtaskRepository.save(subtaskModel);
+    }
 }
