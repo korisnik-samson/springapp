@@ -78,4 +78,11 @@ public class UserController {
     public ResponseEntity<String> softDelete(@PathVariable("id") Integer id, @PathVariable("is_deleted") IsObjectDeleted isDeleted) {
         return ResponseEntity.ok(this.userService.softDelete(id, isDeleted));
     }
+
+    // TODO: Verify this
+    @PutMapping("api/task/assign/{user_id}/{task_id}")
+    public ResponseEntity<String> assignTask(@PathVariable("user_id") int userId, @PathVariable("task_id") int taskId) {
+        String message = userService.assignTask(userId, taskId);
+        return ResponseEntity.ok(message);
+    }
 }

@@ -112,12 +112,13 @@ public class UserService {
     }
 
     // TODO: Assign Project Tasks to Users only if the user is a manager
-    public void assignTask(int userId, int taskId) {
+    public String assignTask(int userId, int taskId) {
         /* UserRole userRole = this.getUserById(userId).get().getRole();
 
         if (userRole == MANAGER) this.assignTask(userId, taskId);
         else throw new IllegalArgumentException("Only managers can assign tasks");*/
-        this.userRepository.assignTask(userId, taskId);
+        int assignedTaskRow = this.userRepository.assignTask(userId, taskId);
+        return assignedTaskRow == 1 ? "TASK ASSIGNED SUCCESSFULLY" : "ERROR ASSIGNING TASK";
     }
 
     // Enable or disable a user - Recommended alternative to deleting a user

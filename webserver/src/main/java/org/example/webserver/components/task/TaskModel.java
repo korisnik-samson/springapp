@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.example.webserver.components.project.ProjectModel;
 import org.example.webserver.components.subtask.SubtaskModel;
 import org.example.webserver.components.user.UserModel;
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.example.webserver.lib.types.TaskPriority;
 import org.example.webserver.lib.types.TaskStatus;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,6 +61,10 @@ public class TaskModel {
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
 
+    @Column(name = "is_deleted")
+    @Enumerated(EnumType.STRING)
+    private IsObjectDeleted isDeleted;
+
     // TODO: Create fields for all existing Relationships
 
     public TaskModel() {}
@@ -93,6 +98,9 @@ public class TaskModel {
 
     public Set<SubtaskModel> getSubtasks() { return Set.copyOf(subtasks); }
     public void setSubtasks(Set<SubtaskModel> subtasks) { this.subtasks = subtasks; }
+
+    public IsObjectDeleted getIsDeleted() { return isDeleted; }
+    public void setIsDeleted(IsObjectDeleted isDeleted) { this.isDeleted = isDeleted; }
 
     @Override
     public String toString() {

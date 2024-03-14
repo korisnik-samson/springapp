@@ -1,6 +1,8 @@
 package org.example.webserver.components.task;
 
 import jakarta.transaction.Transactional;
+import org.example.webserver.lib.types.IsObjectDeleted;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Optional;
 public class TaskService {
     public final TaskRepository taskRepository;
 
+    @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -73,12 +76,19 @@ public class TaskService {
                 finalTask.getStatus().toString(), finalTask.getPriority().toString(), finalTask.getStartDate(), finalTask.getDueDate(),
                 finalTask.getEstimatedHours(), finalTask.getActualHours());
 
-        return updatedRows > 0 ? "Task updated successfully" : "Error updating task";
+        return updatedRows > 0 ? "TASK UPDATED SUCCESSFULLY" : "ERROR UPDATING TASK";
     }
 
-    public void deleteTask(int id) {
+    // permanent delete
+    public String deleteTask(int id) {
         this.taskRepository.deleteById(id);
+
+        return (this.taskRepository.findById(id).isPresent()) ? "ERROR DELETING TASK" : "TASK DELETED SUCCESSFULLY";
     }
 
-
+    // soft delete
+    public String softDeleteTask(int id, IsObjectDeleted isDeleted) {
+        int deletedTask = this.taskRepository.softDeleteTask(id, String.valueOf(isDeleted));
+        return deletedTask > 0 ? "TASK DELETED SUCCESSFULLY" : "ERROR DELETING TASK";
+    }
 }

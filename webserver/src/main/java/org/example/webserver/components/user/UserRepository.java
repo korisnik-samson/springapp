@@ -36,7 +36,8 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     @Query(value = "UPDATE user SET user.is_deleted = :isObjectDeleted WHERE user.user_id = :id", nativeQuery = true)
     int softDelete(@Param("id") Integer id, @Param("isObjectDeleted") String isObjectDeleted);
 
+    // TODO: Verify implementation
     @Modifying
     @Query(value = "INSERT INTO user_task (user_id, task_id) VALUES (:userId, :taskId)", nativeQuery = true)
-    void assignTask(@Param("userId") int userId, @Param("taskId") int taskId);
+    int assignTask(@Param("userId") int userId, @Param("taskId") int taskId);
 }

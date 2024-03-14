@@ -1,5 +1,6 @@
 package org.example.webserver.components.task;
 
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,8 @@ public interface TaskRepository extends JpaRepository<TaskModel, Integer> {
     int updateTask(@Param("id") int id, @Param("title") String title, @Param("description") String description,
             @Param("status") String status, @Param("priority") String priority, @Param("startDate") String startDate,
             @Param("dueDate") String dueDate, @Param("estimatedHours") int estimatedHours, @Param("actualHours") int actualHours);
+
+    @Modifying
+    @Query(value = "UPDATE task SET is_deleted = :isDeleted WHERE task_id = :id", nativeQuery = true)
+    int softDeleteTask(@Param("id") int id, @Param("isDeleted") String isDeleted);
 }
