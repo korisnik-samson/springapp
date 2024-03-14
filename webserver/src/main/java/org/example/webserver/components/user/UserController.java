@@ -1,11 +1,12 @@
 package org.example.webserver.components.user;
 
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 public class UserController {
@@ -17,13 +18,16 @@ public class UserController {
     }
 
     @GetMapping(path = "api/user")
-    public List<UserModel> getUsers() {
-        return this.userService.getUsers();
-    }
+    @ResponseBody
+    public ResponseEntity<?> getUsers(@RequestParam(value = "id", required = false) Integer id) {
+        if (id != null) {
+            Optional<UserModel> user = userService.getUserById(id);
+            return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
-    @GetMapping(path = "api/user/{id}")
-    public Optional<UserModel> getUserById(@PathVariable("id") int id) {
-        return this.userService.getUserById(id);
+        } else {
+            List<UserModel> allUsers = userService.getUsers();
+            return ResponseEntity.ok(allUsers);
+        }
     }
 
     @GetMapping(path = "api/user/{userName}")
@@ -31,9 +35,17 @@ public class UserController {
         return this.userService.getUserByUserName(userName);
     }
 
-    @GetMapping(path = "api/user?user_role={role}")
-    public List<UserModel> getUsersByRole(@PathVariable("role") String role) {
-        return this.userService.getUsersByRole(role);
+    @GetMapping(path = "api/user/roles")
+    @ResponseBody
+    public ResponseEntity<?> getUsersByRole(@RequestParam(value = "role", required = false) String role) {
+        if (role != null) {
+            List<UserModel> users = userService.getUsersByRole(role);
+            return users.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(users);
+
+        } else {
+            List<UserModel> allUsers = userService.getUsers();
+            return ResponseEntity.ok(allUsers);
+        }
     }
 
     @PostMapping (path = "api/user")
@@ -42,8 +54,8 @@ public class UserController {
     }
 
     @PutMapping(path = "api/user/{id}")
-    public void updateUser(@PathVariable("id") int id, @RequestBody UserModel user) {
-        this.userService.updateUser(id, user);
+    public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody UserModel user) {
+        return ResponseEntity.ok(this.userService.updateUser(id, user));
     }
 
     @GetMapping(path = "api/user/members")
@@ -61,18 +73,8 @@ public class UserController {
         return this.userService.findUsersByTask(taskId);
     }
 
-    @PostMapping(path = "api/user_task/user={userId}/task={taskId}")
-    public void assignTask(@PathVariable("userId") int userId, @PathVariable("taskId") int taskId) {
-        this.userService.assignTask(userId, taskId);
-    }
-
-    @PutMapping(path = "api/user/{id}/action?=enable")
-    public void enableUser(@PathVariable("id") int id) {
-        this.userService.enableUser(id);
-    }
-
-    @PutMapping(path = "api/user/{id}/action?=disable")
-    public void disableUser(@PathVariable("id") int id) {
-        this.userService.disableUser(id);
+    @PutMapping(path = "api/user/{id}/is_deleted={is_deleted}")
+    public ResponseEntity<String> softDelete(@PathVariable("id") Integer id, @PathVariable("is_deleted") IsObjectDeleted isDeleted) {
+        return ResponseEntity.ok(this.userService.softDelete(id, isDeleted));
     }
 }

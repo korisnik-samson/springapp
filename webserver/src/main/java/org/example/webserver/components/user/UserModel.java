@@ -1,12 +1,11 @@
 package org.example.webserver.components.user;
 
 import jakarta.persistence.*;
-import org.apache.catalina.User;
 import org.example.webserver.components.project.ProjectModel;
 import org.example.webserver.components.subtask.SubtaskModel;
 import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.lib.Encoder;
-import org.example.webserver.lib.types.IsUserDeleted;
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.example.webserver.lib.types.UserRole;
 
 import java.util.HashSet;
@@ -42,7 +41,7 @@ public class UserModel {
     // TODO: Use this field to soft delete a user
     @Column(name = "is_deleted")
     @Enumerated(EnumType.STRING)
-    private IsUserDeleted isDeleted = IsUserDeleted.FALSE;
+    private IsObjectDeleted isDeleted = IsObjectDeleted.FALSE;
 
     @ManyToMany
     @JoinTable(
@@ -105,6 +104,9 @@ public class UserModel {
                 ", email='" + email + '\'' + ", role='" + role + '\'' + '}';
     }
 
-    public void setIsDeleted(IsUserDeleted isUserDeleted) { this.isDeleted = isUserDeleted; }
-    public IsUserDeleted getIsDeleted() { return isDeleted; }
+    public void setIsDeleted(IsObjectDeleted isObjectDeleted) { this.isDeleted = isObjectDeleted; }
+    public IsObjectDeleted getIsDeleted() { return isDeleted; }
+
+    public Set<TaskModel> getTasks() { return Set.copyOf(tasks); }
+    public void setTasks(Set<TaskModel> tasks) { this.tasks = tasks; }
 }

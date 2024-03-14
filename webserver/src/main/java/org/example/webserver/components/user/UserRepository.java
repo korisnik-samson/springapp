@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     @Modifying
     @Query(value = "UPDATE user SET first_name = :firstName, last_name = :lastName, user_name = :userName, " +
             "user_email = :email, user_password = :password, user_role = :role WHERE user_id = :id", nativeQuery = true)
-    void updateUser(@Param("id")int id, @Param("firstName")String firstName, @Param("lastName")String lastName, @Param("userName")String userName,
+    int updateUser(@Param("id")int id, @Param("firstName")String firstName, @Param("lastName")String lastName, @Param("userName")String userName,
                     @Param("email")String email, @Param("password")String password, @Param("role")String role);
 
     // Verify this shit works bro
@@ -32,15 +32,10 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     List<UserModel> findManagers();
 
     @Modifying
-    @Query(value = "UPDATE user SET user.is_deleted = 'TRUE' WHERE user_id = :id", nativeQuery = true)
-    void disableUser(@Param("id") int id);
-
-    @Modifying
-    @Query(value = "UPDATE user SET user.is_deleted = 'FALSE' WHERE user.user_id = :id", nativeQuery = true)
-    void enableUser(@Param("id") int id);
+    @Query(value = "UPDATE user SET user.is_deleted = :isObjectDeleted WHERE user.user_id = :id", nativeQuery = true)
+    int softDelete(@Param("id") Integer id, @Param("isObjectDeleted") String isObjectDeleted);
 
     @Modifying
     @Query(value = "INSERT INTO user_task (user_id, task_id) VALUES (:userId, :taskId)", nativeQuery = true)
     void assignTask(@Param("userId") int userId, @Param("taskId") int taskId);
-
 }

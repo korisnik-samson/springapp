@@ -3,25 +3,31 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { getStaticProps } from "@/lib/endpoints";
+import fetch from 'isomorphic-unfetch'
 
-export default function Home() {
+export default function Home({ data }) {
+    const data  = getStaticProps();
+    console.log(data);
+
     return (
         <React.Fragment>
             <MaxWidthWrapper className="mb-12 mt-28 sm:mt-49 flex flex-col items-center justify-center text-center">
                 <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full
                  border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
                     <p className="text-sm font-semibold text-gray-700">
-                        Student360 is now public!
+                        TaskHive is now public!
                     </p>
                 </div>
                 <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-                    Register <span className="text-blue-600">Student360</span> database in seconds
+                    Manage your projects <span className="text-blue-600">TaskHive</span> style
                 </h1>
-                <p className="mt-5 max-w-prose sm:text-lg">Welcome to Student360</p>
+                <p className="mt-5 max-w-prose sm:text-lg">Welcome to TaskHive</p>
+                <p className="mt-5 max-w-prose sm:text-lg">{data}</p>
 
-                <Link className={buttonVariants({size: 'lg', className: 'mt-5'})} href='' target='_blank'>
+                <Link className={buttonVariants({ size: 'lg', className: 'mt-5' })} href='' target='_blank'>
                     Get Started
-                    <ArrowRight className='ml-2 h-5 w-5'/>
+                    <ArrowRight className='ml-2 h-5 w-5' />
                 </Link>
             </MaxWidthWrapper>
 
@@ -35,7 +41,7 @@ export default function Home() {
                                 ' 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)'
                         }} className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2
                          rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)]
-                          sm:w-[72.1875rem]"/>
+                          sm:w-[72.1875rem]" />
                     </div>
 
                     <div aria-hidden='true' className="pointer-events-none absolute inset-x-0 -top-40

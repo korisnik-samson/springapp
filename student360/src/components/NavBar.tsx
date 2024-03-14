@@ -7,12 +7,12 @@ import { ModeToggle } from "@/components/ModeToggle";
 
 const NavBar = () => {
     return (
-        <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full bg-black/75
+        <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full bg-transparent border-bottom-2
         backdrop-blur-lg transition-all">
             <MaxWidthWrapper>
                 <div className="flex h-14 items-center justify-between">
                     <Link href='/' className="flex z-40 font-semibold">
-                        Student360
+                        TaskHive
                     </Link>
 
                     <div className="hidden items-center space-x-4 sm:flex">

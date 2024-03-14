@@ -7,6 +7,7 @@ import org.example.webserver.components.deadline.DeadlineModel;
 import org.example.webserver.components.milestone.MilestoneModel;
 import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.components.user.UserModel;
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.example.webserver.lib.types.ProjectStatus;
 
 import java.util.HashSet;
@@ -35,6 +36,10 @@ public class ProjectModel {
     @Column(name = "project_status")
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+
+    @Column(name = "is_deleted")
+    @Enumerated(EnumType.STRING)
+    private IsObjectDeleted isDeleted;
 
     @OneToMany(mappedBy = "project")
     private Set<MilestoneModel> projectMilestones = new HashSet<>();
@@ -80,6 +85,9 @@ public class ProjectModel {
 
     public UserModel getProjectManager() { return projectManager; }
     public void setProjectManager(UserModel projectManager) { this.projectManager = projectManager; }
+
+    public IsObjectDeleted getIsDeleted() { return isDeleted; }
+    public void setIsDeleted(IsObjectDeleted isDeleted) { this.isDeleted = isDeleted; }
 
     @Override
     public String toString() {

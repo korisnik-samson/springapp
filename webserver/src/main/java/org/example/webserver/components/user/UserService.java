@@ -1,16 +1,13 @@
 package org.example.webserver.components.user;
 
 import jakarta.transaction.Transactional;
-import org.example.webserver.lib.types.IsUserDeleted;
-import org.example.webserver.lib.types.UserRole;
+import org.example.webserver.lib.types.IsObjectDeleted;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.example.webserver.lib.types.UserRole.MANAGER;
 
 @Service
 public class UserService {
@@ -24,7 +21,7 @@ public class UserService {
     public List<UserModel> getUsers() {
         // Get all users and remove the ones that are disabled
         List<UserModel> userList = this.userRepository.findAll();
-        userList.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+        userList.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
         return userList;
     }
@@ -32,7 +29,7 @@ public class UserService {
     public Optional<UserModel> getUserById(int id) {
         Optional<UserModel> foundUser = this.userRepository.findById(id);
 
-        if (foundUser.isPresent() && foundUser.get().getIsDeleted() == IsUserDeleted.TRUE)
+        if (foundUser.isPresent() && foundUser.get().getIsDeleted() == IsObjectDeleted.TRUE)
             return Optional.empty();
 
         return foundUser;
@@ -41,7 +38,7 @@ public class UserService {
     public Optional<UserModel> getUserByUserName(String userName) {
         Optional<UserModel> foundUser = this.userRepository.findByUserName(userName);
 
-        if (foundUser.isPresent() && foundUser.get().getIsDeleted() == IsUserDeleted.TRUE)
+        if (foundUser.isPresent() && foundUser.get().getIsDeleted() == IsObjectDeleted.TRUE)
             return Optional.empty();
 
         return foundUser;
@@ -50,7 +47,7 @@ public class UserService {
     public List<UserModel> getUsersByRole(String role) {
         List<UserModel> foundUsers = this.userRepository.findByRole(role);
 
-        foundUsers.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+        foundUsers.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
         return foundUsers;
     }
@@ -61,20 +58,20 @@ public class UserService {
 
     public List<UserModel> getMembers() {
         List<UserModel> members = this.userRepository.findMembers();
-        members.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+        members.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
         return members;
     }
 
     public List<UserModel> getManagers() {
         List<UserModel> managers = this.userRepository.findManagers();
-        managers.removeIf(user -> user.getIsDeleted() == IsUserDeleted.TRUE);
+        managers.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
         return managers;
     }
 
     @Transactional
-    public void updateUser(int id, UserModel updatedUser) {
+    public String updateUser(int id, UserModel updatedUser) {
         Optional<UserModel> currentUser = this.userRepository.findById(id);
         UserModel finalUser = new UserModel();
 
@@ -104,8 +101,10 @@ public class UserService {
             finalUser.setRole(updatedUser.getRole());
         else finalUser.setRole(currentUser.get().getRole());
 
-        this.userRepository.updateUser(finalUser.getId(), finalUser.getFirstName(), finalUser.getLastName(),
+        int updatedRow = this.userRepository.updateUser(finalUser.getId(), finalUser.getFirstName(), finalUser.getLastName(),
                 finalUser.getEmail(), finalUser.getUserName(), finalUser.getPassword(), finalUser.getRole(true));
+
+        return updatedRow == 1 ? "USER UPDATED SUCCESSFULLY" : "ERROR UPDATING USER";
     }
 
     public Optional<List<UserModel>> findUsersByTask(int taskId) {
@@ -114,28 +113,24 @@ public class UserService {
 
     // Assign Project Tasks to Users only if the user is a manager
     public void assignTask(int userId, int taskId) {
-        UserRole userRole = this.getUserById(userId).get().getRole();
+        /* UserRole userRole = this.getUserById(userId).get().getRole();
 
         if (userRole == MANAGER) this.assignTask(userId, taskId);
-        else throw new IllegalArgumentException("Only managers can assign tasks");
+        else throw new IllegalArgumentException("Only managers can assign tasks");*/
+        this.userRepository.assignTask(userId, taskId);
     }
 
-    // Enable or disable a user - Alternative to deleting a user
-    public void enableUser(int id) {
+    // Enable or disable a user - Recommended alternative to deleting a user
+    public String softDelete(Integer id, IsObjectDeleted isDeleted) {
         UserModel user = userRepository.findById(id).orElseThrow(
             () -> new ObjectNotFoundException(id, "UserModel")
         );
 
-        user.setIsDeleted(IsUserDeleted.FALSE);
-        userRepository.save(user);
-    }
+        int deletedRows = this.userRepository.softDelete(id, isDeleted.toString());
 
-    public void disableUser(int id) {
-        UserModel user = userRepository.findById(id).orElseThrow(
-            () -> new ObjectNotFoundException(id, "UserModel")
-        );
+        user.setIsDeleted(isDeleted);
+        this.userRepository.save(user);
 
-        user.setIsDeleted(IsUserDeleted.TRUE);
-        userRepository.save(user);
+        return deletedRows == 1 ? "USER DELETED SUCCESSFULLY" : "ERROR DELETING USER";
     }
 }

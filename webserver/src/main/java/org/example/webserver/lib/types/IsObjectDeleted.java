@@ -1,5 +1,5 @@
 package org.example.webserver.lib.types;
 
-public enum IsUserDeleted {
+public enum IsObjectDeleted {
     TRUE, FALSE
 }
