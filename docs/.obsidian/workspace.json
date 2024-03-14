@@ -13,27 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
+                "file": "Project Plan.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f98fa4cdfbc75325",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Project Plan.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
-      },
-      {
-        "id": "48241bcdcb70037b",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "c54ee9d8cffe4606",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
-            }
-          }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -99,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "Project Plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
+                "file": "Project Plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md"
+                "file": "Project Plan.md"
               }
             }
           }
@@ -160,8 +159,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "104f8b9b68a71726",
+  "active": "f98fa4cdfbc75325",
   "lastOpenFiles": [
-    "Welcome.md"
+    "Entity & Relationship Visualization.md",
+    "Project Plan.md",
+    "ProjectManagement_ClassDiagram.png"
   ]
 }
