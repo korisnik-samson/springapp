@@ -73,6 +73,7 @@ public class UserController {
         return this.userService.findUsersByTask(taskId);
     }
 
+    // TODO: Verify this
     @PutMapping(path = "api/user/{id}/is_deleted={is_deleted}")
     public ResponseEntity<String> softDelete(@PathVariable("id") Integer id, @PathVariable("is_deleted") IsObjectDeleted isDeleted) {
         return ResponseEntity.ok(this.userService.softDelete(id, isDeleted));

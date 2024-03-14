@@ -111,7 +111,7 @@ public class UserService {
         return this.userRepository.findUsersByTask(taskId);
     }
 
-    // Assign Project Tasks to Users only if the user is a manager
+    // TODO: Assign Project Tasks to Users only if the user is a manager
     public void assignTask(int userId, int taskId) {
         /* UserRole userRole = this.getUserById(userId).get().getRole();
 
@@ -126,7 +126,7 @@ public class UserService {
             () -> new ObjectNotFoundException(id, "UserModel")
         );
 
-        int deletedRows = this.userRepository.softDelete(id, isDeleted.toString());
+        int deletedRows = this.userRepository.softDelete(id, String.valueOf(isDeleted));
 
         user.setIsDeleted(isDeleted);
         this.userRepository.save(user);
