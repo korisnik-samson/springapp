@@ -71,3 +71,11 @@ and in the later future when the project will be upscaled.**
 ## Project Details
 
 GitHub Repository:
+[Project Manager - Spring Application](https://github.com/korisnik-samson/springapp)
+
+## Author
+
+<img src="Singidunum_University_logo.svg.png" alt="University logo" style="height: 100px; width:100px;" />
+
+Samson Offorjindu - 2021230446
+[GitHub Profile](https://github.com/korisnik-samson)

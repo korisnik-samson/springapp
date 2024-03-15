@@ -23,16 +23,13 @@
             "id": "f98fa4cdfbc75325",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Project Plan - Project Management System.md",
-                "mode": "source",
-                "source": false
+                "file": "Singidunum_University_logo.svg.png"
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -146,8 +143,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -159,12 +155,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f98fa4cdfbc75325",
+  "active": "104f8b9b68a71726",
   "lastOpenFiles": [
-    "Singidunum_University_logo.svg.png",
-    "Singidunum_University_logo.svg.png.crdownload",
+    "A91wjrwvn_a2vwrx_ris.tmp",
+    "A91hhf9pi_a2vwrr_ris.tmp",
+    "git.png",
+    "git.png.crdownload",
+    "Project Plan - Project Management System.pdf",
+    "details.pdf",
     "Entity & Relationship Visualization.md",
     "Project Plan - Project Management System.md",
+    "Singidunum_University_logo.svg.png",
+    "Singidunum_University_logo.svg.png.crdownload",
     "ProjectManagement_ClassDiagram.png"
   ]
 }

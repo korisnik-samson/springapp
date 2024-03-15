@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { getStaticProps } from "@/lib/endpoints";
 import fetch from 'isomorphic-unfetch'
 
-export default function Home({ data }) {
+export default function Home() {
     const data  = getStaticProps();
     console.log(data);
 
@@ -23,7 +23,7 @@ export default function Home({ data }) {
                     Manage your projects <span className="text-blue-600">TaskHive</span> style
                 </h1>
                 <p className="mt-5 max-w-prose sm:text-lg">Welcome to TaskHive</p>
-                <p className="mt-5 max-w-prose sm:text-lg">{data}</p>
+                <p className="mt-5 max-w-prose sm:text-lg"></p>
 
                 <Link className={buttonVariants({ size: 'lg', className: 'mt-5' })} href='' target='_blank'>
                     Get Started
