@@ -16,9 +16,9 @@ public interface TaskRepository extends JpaRepository<TaskModel, Integer> {
     @Query(value = "UPDATE task SET task_title = :title, task_description = :description, task_status = :status, " +
             "task_priority = :priority, task_start_date = :startDate, task_due_date = :dueDate, task_estimated_hours = :estimatedHours, " +
             "task_actual_hours = :actualHours WHERE task_id = :id", nativeQuery = true)
-    int updateTask(@Param("id") int id, @Param("title") String title, @Param("description") String description,
-            @Param("status") String status, @Param("priority") String priority, @Param("startDate") String startDate,
-            @Param("dueDate") String dueDate, @Param("estimatedHours") int estimatedHours, @Param("actualHours") int actualHours);
+    int updateTask(@Param("id")int id, @Param("title")String title, @Param("description")String description,
+            @Param("status")String status, @Param("priority")String priority, @Param("startDate")String startDate,
+            @Param("dueDate")String dueDate, @Param("estimatedHours")int estimatedHours, @Param("actualHours")int actualHours);
 
     @Modifying
     @Query(value = "UPDATE task SET is_deleted = :isDeleted WHERE task_id = :id", nativeQuery = true)

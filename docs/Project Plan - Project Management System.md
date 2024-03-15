@@ -1,4 +1,14 @@
 
+## The Idea
+
+* This is a backend project, written in Java, made possible by the Spring Framework. This is a backend written for a Project Management application to serve the purpose and solve the problem of project and task management issues. I plan to upscale this project in the future, as it will be used and presented to the NHS.
+
+Below are the various outlined tools and functionalities that make this backend work.
+
+**NB: Some of these features will be implemented in time while the frontend is implemented
+and in the later future when the project will be upscaled.**
+
+
 ## **Core Functionality**
 
 - **Project Management:**
@@ -28,6 +38,12 @@
     - Visualizations like Gantt charts or Kanban-style boards to enhance project overviews.
 
 
+## *Entity Relationships Considered*
+
+
+![[ProjectManagement_ClassDiagram.png]]
+
+
 **Backend Architecture**
 - **REST API Design:** Adopt best practices for RESTful API development, ensuring consistency and ease of integration for the Next.js frontend.
 - **Data Validation:** Enforce strong input validation on the backend to prevent invalid data from corrupting the project management system.
@@ -50,3 +66,8 @@
 - **Authentication & Authorization:** Implement strong security measures with Spring Security for authentication and role-based authorization.
 - **Input Sanitization:** Protect against XSS (Cross-Site Scripting) and SQL injection attacks.
 - **Regular Updates:** Keep your Spring Boot dependencies up-to-date to address potential vulnerabilities.
+
+
+## Project Details
+
+GitHub Repository:
