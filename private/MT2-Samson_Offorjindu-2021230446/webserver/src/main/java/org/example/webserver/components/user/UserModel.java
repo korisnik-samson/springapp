@@ -1,7 +1,6 @@
 package org.example.webserver.components.user;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.example.webserver.components.project.ProjectModel;
 import org.example.webserver.components.subtask.SubtaskModel;
 import org.example.webserver.components.task.TaskModel;
@@ -13,12 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "user")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class UserModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -31,7 +26,7 @@ public class UserModel {
     private String lastName;
 
     @Column(name = "user_name")
-    private String userName;
+    private String name;
 
     @Column(name = "user_email")
     private String email;
@@ -67,11 +62,51 @@ public class UserModel {
     @OneToMany(mappedBy = "projectManager")
     private Set<ProjectModel> createdProjects = new HashSet<>();
 
+    public UserModel() {}
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public String getUserName() { return name; }
+    public void setUserName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+
     // NOTE: The password is hashed before being stored in the database
-    @Transient
     public void setPassword(String password) { this.password = Encoder.getMd5(password); }
+
+    public UserRole getRole() { return role; }
+    public String getRole(boolean isStr) { if (isStr) return role.toString(); return null; }
+
+    public void setRole(String role) { this.role = UserRole.valueOf(role); }
+    public void setRole(UserRole role) { this.role = role; }
+
+    public Set<ProjectModel> getCreatedProjects() { return Set.copyOf(createdProjects); }
+    public void setCreatedProjects(Set<ProjectModel> createdProjects) { this.createdProjects = createdProjects; }
 
     public boolean checkPassword(String password) {
         return this.password.equals(Encoder.getMd5(password));
     }
+
+    @Override
+    public String toString() {
+        return "UserModel{" + "firstName='" + firstName + '\'' + ", id=" + id +
+                ", lastName='" + lastName + '\'' + ", name='" + name + '\'' +
+                ", email='" + email + '\'' + ", role='" + role + '\'' + '}';
+    }
+
+    public void setIsDeleted(IsObjectDeleted isObjectDeleted) { this.isDeleted = isObjectDeleted; }
+    public IsObjectDeleted getIsDeleted() { return isDeleted; }
+
+    public Set<TaskModel> getTasks() { return Set.copyOf(tasks); }
+    public void setTasks(Set<TaskModel> tasks) { this.tasks = tasks; }
 }

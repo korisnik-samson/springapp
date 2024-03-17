@@ -73,8 +73,8 @@ public class TaskService {
         else finalTask.setActualHours(currentTask.get().getActualHours());
 
         int updatedRows = this.taskRepository.updateTask(finalTask.getId(), finalTask.getTitle(), finalTask.getDescription(),
-                finalTask.getStatus().toString(), finalTask.getPriority().toString(), String.valueOf(finalTask.getStartDate()),
-                String.valueOf(finalTask.getDueDate()), finalTask.getEstimatedHours(), finalTask.getActualHours());
+                finalTask.getStatus().toString(), finalTask.getPriority().toString(), finalTask.getStartDate(), finalTask.getDueDate(),
+                finalTask.getEstimatedHours(), finalTask.getActualHours());
 
         return updatedRows > 0 ? "TASK UPDATED SUCCESSFULLY" : "ERROR UPDATING TASK";
     }

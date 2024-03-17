@@ -1,7 +1,6 @@
 package org.example.webserver.components.subtask;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.components.user.UserModel;
 import org.example.webserver.lib.types.SubtaskStatus;
@@ -10,11 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "subtask")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class SubtaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +33,29 @@ public class SubtaskModel {
     @Enumerated(EnumType.STRING)
     private SubtaskStatus status;
 
+    public SubtaskModel() {}
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public TaskModel getTask() { return task; }
+    public void setTask(TaskModel task) { this.task = task; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public Set<UserModel> getUsers() { return Set.copyOf(users); }
+    public void setUsers(Set<UserModel> users) { this.users = users; }
+
+    public SubtaskStatus getStatus() { return status; }
     public void setStatus(String status) { this.status = SubtaskStatus.valueOf(status); }
+
+    @Override
+    public String toString() {
+        return "SubtaskModel{" + "id=" + id + ", task=" + task + ", title='" + title + '\'' +
+                ", description='" + description + '\'' + ", users=" + users + ", status='" + status + '\'' + '}';
+    }
 }

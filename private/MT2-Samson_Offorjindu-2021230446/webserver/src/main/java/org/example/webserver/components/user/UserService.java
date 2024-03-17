@@ -102,7 +102,7 @@ public class UserService {
         else finalUser.setRole(currentUser.get().getRole());
 
         int updatedRow = this.userRepository.updateUser(finalUser.getId(), finalUser.getFirstName(), finalUser.getLastName(),
-                finalUser.getEmail(), finalUser.getUserName(), finalUser.getPassword(), String.valueOf(finalUser.getRole()));
+                finalUser.getEmail(), finalUser.getUserName(), finalUser.getPassword(), finalUser.getRole(true));
 
         return updatedRow == 1 ? "USER UPDATED SUCCESSFULLY" : "ERROR UPDATING USER";
     }

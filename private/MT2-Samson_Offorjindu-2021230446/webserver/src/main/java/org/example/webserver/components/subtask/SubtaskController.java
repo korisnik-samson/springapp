@@ -25,7 +25,7 @@ public class SubtaskController {
             return subtasks.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 
         } else {
-            List<SubtaskModel> allSubtasks = subtaskService.getSubtasks();
+            List<SubtaskModel> allSubtasks = subtaskService.getSubtasks(taskId);
             return ResponseEntity.ok(allSubtasks);
         }
     }

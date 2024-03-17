@@ -1,5 +1,6 @@
 package org.example.webserver.components.subtask;
 import jakarta.transaction.Transactional;
+import org.example.webserver.components.task.TaskModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class SubtaskService {
         return createdRow == 1 ? "SUBTASK CREATED SUCCESSFULLY" : "SUBTASK CREATION FAILED";
     }
 
-    public List<SubtaskModel> getSubtasks() {
-        return this.subtaskRepository.findAll();
+    public List<SubtaskModel> getSubtasks(Integer taskId) {
+        return subtaskRepository.findAll();
     }
 
     public Optional<SubtaskModel> getSubtaskById(Integer subtaskId) {

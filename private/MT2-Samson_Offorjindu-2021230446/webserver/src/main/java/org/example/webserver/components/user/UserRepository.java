@@ -22,6 +22,7 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     int updateUser(@Param("id")int id, @Param("firstName")String firstName, @Param("lastName")String lastName, @Param("userName")String userName,
                     @Param("email")String email, @Param("password")String password, @Param("role")String role);
 
+    // Verify this shit works bro
     @Query(value = "SELECT * FROM user WHERE user_id IN (SELECT user_id FROM user_task WHERE task_id = :id)", nativeQuery = true)
     Optional<List<UserModel>> findUsersByTask(@Param("id") int taskId);
     
