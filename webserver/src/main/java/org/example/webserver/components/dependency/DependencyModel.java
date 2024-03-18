@@ -1,10 +1,16 @@
 package org.example.webserver.components.dependency;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.lib.types.DependencyType;
 
 @Entity(name = "dependency")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class DependencyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,21 +26,4 @@ public class DependencyModel {
     @Column(name = "dependency_type")
     @Enumerated(EnumType.STRING)
     private DependencyType dependencyType;
-
-    public DependencyModel() {}
-
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public TaskModel getTask() { return task; }
-    public void setTask(TaskModel task) { this.task = task; }
-
-    public DependencyType getDependencyType() { return dependencyType; }
-    public void setDependencyType(DependencyType dependencyType) { this.dependencyType = dependencyType; }
-
-    @Override
-    public String toString() {
-        return "DependencyModel{" + "id=" + id +
-                ", task=" + task + ", dependencyType='" + dependencyType + '\'' + '}';
-    }
 }

@@ -7,7 +7,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 
 const NavBar = () => {
     return (
-        <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full bg-transparent border-bottom-2
+        <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full bg-transparent border-b-2
         backdrop-blur-lg transition-all">
             <MaxWidthWrapper>
                 <div className="flex h-14 items-center justify-between">

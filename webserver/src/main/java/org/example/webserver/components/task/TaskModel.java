@@ -1,6 +1,7 @@
 package org.example.webserver.components.task;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
@@ -69,6 +70,7 @@ public class TaskModel {
 
     @Column(name = "is_deleted")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private IsObjectDeleted isDeleted;
 
     // TODO: Create fields for all existing Relationships

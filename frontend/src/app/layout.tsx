@@ -16,8 +16,8 @@ const fontSans: NextFontWithVariable = FontSans({
 const inter: NextFont = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Student360",
-    description: "Modern student management system",
+    title: "TaskHive",
+    description: "Modern project management system",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {

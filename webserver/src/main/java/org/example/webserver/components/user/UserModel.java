@@ -1,5 +1,6 @@
 package org.example.webserver.components.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.webserver.components.project.ProjectModel;
@@ -37,6 +38,7 @@ public class UserModel {
     private String email;
 
     @Column(name = "user_password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "user_role")
@@ -46,6 +48,7 @@ public class UserModel {
     // TODO: Use this field to soft delete a user
     @Column(name = "is_deleted")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private IsObjectDeleted isDeleted = IsObjectDeleted.FALSE;
 
     @ManyToMany

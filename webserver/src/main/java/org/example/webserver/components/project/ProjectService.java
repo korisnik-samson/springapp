@@ -1,14 +1,9 @@
 package org.example.webserver.components.project;
 
 import jakarta.transaction.Transactional;
-import org.example.webserver.components.task.TaskModel;
-import org.example.webserver.components.task.TaskRepository;
-import org.example.webserver.components.user.UserModel;
-import org.example.webserver.components.user.UserRepository;
-import org.hibernate.ObjectNotFoundException;
+import org.example.webserver.lib.types.ProjectStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,8 +57,8 @@ public class ProjectService {
         else finalProject.setProjectEndDate(currentProject.get().getProjectEndDate());
 
         if (updatedProject.getProjectStatus() != null)
-            finalProject.setProjectStatus(String.valueOf(updatedProject.getProjectStatus()));
-        else finalProject.setProjectStatus(String.valueOf(currentProject.get().getProjectStatus()));
+            finalProject.setProjectStatus(ProjectStatus.valueOf(String.valueOf(updatedProject.getProjectStatus())));
+        else finalProject.setProjectStatus(ProjectStatus.valueOf(String.valueOf(currentProject.get().getProjectStatus())));
 
         int updatedProjectRow = this.projectRepository.updateProject(finalProject.getId(), finalProject.getProjectName(),
                 finalProject.getProjectDescription(), finalProject.getProjectStartDate(), finalProject.getProjectEndDate(),
