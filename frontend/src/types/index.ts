@@ -79,10 +79,16 @@ export interface User {
     createdProjects?: Project[];
 }
 
-export type TCardProps = React.ComponentProps<typeof Card>
-
 export type ProjectCardProps = {
     projectName: string;
-    projectTasks: Task[];
-    className?: string | TCardProps;
+    projectTasks: Array<Task> | Task[];
+    className?: React.ComponentProps<typeof Card>;
+}
+
+export type ProjectPageProps = {
+    params: { projectId: string | number; };
+}
+
+export type ProjectProps = {
+    params: { projects: string | number; };
 }

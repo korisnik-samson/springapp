@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BellIcon } from "@radix-ui/react-icons";
@@ -6,35 +6,12 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { ProjectCardProps } from "@/types";
 
-// TODO: Implement ProjectCard for rendering project details
-// props: projectName, tasks, notifications
-
 const ProjectCard = ({ projectName, projectTasks, className, ...props  }: ProjectCardProps) => {
-    const projectApiUrl = 'http://localhost:8000/api/project';
-    const [projects, setProjects] = useState(null);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(projectApiUrl);
-                const data = await response.json();
-                setProjects(data);
-
-            } catch (error) {
-                throw new Error('Error fetching projects');
-            }
-            setLoading(false);
-        };
-        fetchProjects();
-    }, []);
-
     return (
         <Card className={cn("w-[380px] mt-10", className)} {...props}>
             <CardHeader>
-                <CardTitle>{projects}</CardTitle>
-                <CardDescription>{`You have ${projectTasks.length} Tasks.`}</CardDescription>
+                <CardTitle>{projectName}</CardTitle>
+                <CardDescription>{`You have ${projectTasks.length} tasks.`}</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
                 <div className=" flex items-center space-x-4 rounded-md border p-4">
@@ -46,7 +23,7 @@ const ProjectCard = ({ projectName, projectTasks, className, ...props  }: Projec
                     <Switch />
                 </div>
                 <div>
-                    {projectTasks.map((task, index) => (
+                    {projectTasks?.map((task, index) => (
                         <div key={index} className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
                             <span className="flex h-2 w-2 translate-y-1 rounded-full bg-orange-500" />
                             <div className="space-y-1">

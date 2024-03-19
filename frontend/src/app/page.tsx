@@ -25,7 +25,6 @@ export default function Home() {
                     <ArrowRight className='ml-2 h-5 w-5' />
                 </Link>
             </MaxWidthWrapper>
-            {/*<CustomGradient />*/}
         </React.Fragment>
     );
 }

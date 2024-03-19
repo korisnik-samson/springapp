@@ -19,6 +19,7 @@ import java.util.Set;
 
 @Entity(name = "task")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "task", uniqueConstraints = {@UniqueConstraint(columnNames = {"task_id"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -74,5 +75,4 @@ public class TaskModel {
     private IsObjectDeleted isDeleted;
 
     // TODO: Create fields for all existing Relationships
-
 }

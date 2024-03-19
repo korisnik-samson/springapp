@@ -1,5 +1,7 @@
 package org.example.webserver.components.subtask;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.webserver.components.task.TaskModel;
@@ -15,6 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "subtask", uniqueConstraints = {@UniqueConstraint(columnNames = {"subtask_id"})})
 public class SubtaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

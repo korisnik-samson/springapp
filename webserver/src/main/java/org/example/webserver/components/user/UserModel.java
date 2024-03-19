@@ -1,6 +1,8 @@
 package org.example.webserver.components.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.webserver.components.project.ProjectModel;
@@ -19,6 +21,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id"})})
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

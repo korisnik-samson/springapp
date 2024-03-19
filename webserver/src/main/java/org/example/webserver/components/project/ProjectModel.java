@@ -22,6 +22,7 @@ import java.util.Set;
 @Setter
 @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "project", uniqueConstraints = { @UniqueConstraint(columnNames = { "project_id" }) })
 public class ProjectModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

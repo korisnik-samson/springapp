@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function getProjects() {
+export async function GET() {
     try {
         const res = await fetch('http://localhost:8080/api/project', {
             headers: { 'Content-Type': 'application/json' },
