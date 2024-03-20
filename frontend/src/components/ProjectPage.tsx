@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import ProjectCard from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import CreateProjectButton from "@/components/CreateProjectButton";
 
 const ProjectPage = () => {
     const projectApiUrl = 'http://localhost:8080/api/project';
@@ -33,19 +35,7 @@ const ProjectPage = () => {
     // console.log({ projects })
 
     const createProject = async () => {
-        try {
-            const response = await fetch(projectApiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ projectName: 'New Project' }),
-            })
 
-            const data = await response.json();
-            // setProjects([...projects, data]);
-
-        } catch (error) {
-            throw new Error('Error creating project');
-        }
     }
 
     return (
@@ -53,7 +43,8 @@ const ProjectPage = () => {
             <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row
             sm:items-center sm:gap-0">
                 <h1 className="mb-3 font-bold text-5xl">My Projects</h1>
-                <Button className="w-[150]" onClick={() => {}}>Create Project</Button>
+                {/* Create Project button */}
+                <CreateProjectButton />
             </div>
             {projects && (
                 <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -8,7 +8,7 @@ import { ProjectCardProps } from "@/types";
 
 const ProjectCard = ({ projectName, projectTasks, className, ...props  }: ProjectCardProps) => {
     return (
-        <Card className={cn("w-[380px] mt-10", className)} {...props}>
+        <Card className={cn("w-[380px] h-auto mt-10", className)} {...props}>
             <CardHeader>
                 <CardTitle>{projectName}</CardTitle>
                 <CardDescription>{`You have ${projectTasks.length} tasks.`}</CardDescription>
