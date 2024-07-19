@@ -18,12 +18,12 @@ import java.util.Set;
 @Setter
 @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name = "subtask", uniqueConstraints = {@UniqueConstraint(columnNames = {"subtask_id"})})
+@Table(name = "subtask", uniqueConstraints = { @UniqueConstraint(columnNames = {"subtask_id"}) })
 public class SubtaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subtask_id")
-    private int id;
+    private Integer id;
 
     // represents the parent task
     @ManyToOne

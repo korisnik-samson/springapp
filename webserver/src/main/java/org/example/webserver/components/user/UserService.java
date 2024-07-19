@@ -2,12 +2,20 @@ package org.example.webserver.components.user;
 
 import jakarta.transaction.Transactional;
 import org.example.webserver.lib.types.IsObjectDeleted;
+import org.example.webserver.lib.types.UserRole;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
+
+import static org.example.webserver.lib.types.UserRole.MANAGER;
+import static org.example.webserver.lib.types.UserRole.MEMBER;
 
 @Service
 public class UserService {
@@ -19,14 +27,14 @@ public class UserService {
     }
 
     public List<UserModel> getUsers() {
-        // Get all users and remove the ones that are disabled
+        // Get all users and filter out the ones that are disabled (soft-deleted)
         List<UserModel> userList = this.userRepository.findAll();
         userList.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
         return userList;
     }
 
-    public Optional<UserModel> getUserById(int id) {
+    public Optional<UserModel> getUserById(Integer id) {
         Optional<UserModel> foundUser = this.userRepository.findById(id);
 
         if (foundUser.isPresent() && foundUser.get().getIsDeleted() == IsObjectDeleted.TRUE)
@@ -64,6 +72,7 @@ public class UserService {
     }
 
     public List<UserModel> getManagers() {
+        // Filtering has been implemented in the repository query injection
         List<UserModel> managers = this.userRepository.findManagers();
         managers.removeIf(user -> user.getIsDeleted() == IsObjectDeleted.TRUE);
 
@@ -71,7 +80,7 @@ public class UserService {
     }
 
     @Transactional
-    public String updateUser(int id, UserModel updatedUser) {
+    public String updateUser(Integer id, UserModel updatedUser) {
         Optional<UserModel> currentUser = this.userRepository.findById(id);
         UserModel finalUser = new UserModel();
 
@@ -107,17 +116,20 @@ public class UserService {
         return updatedRow == 1 ? "USER UPDATED SUCCESSFULLY" : "ERROR UPDATING USER";
     }
 
-    public Optional<List<UserModel>> findUsersByTask(int taskId) {
+    public Optional<List<UserModel>> findUsersByTask(Integer taskId) {
         return this.userRepository.findUsersByTask(taskId);
     }
 
     // TODO: Assign Project Tasks to Users only if the user is a manager
-    public String assignTask(int userId, int taskId) {
-        /* UserRole userRole = this.getUserById(userId).get().getRole();
+    public String assignTask(Integer managerId, Integer userId, Integer taskId) {
+         UserRole userRole = this.getUserById(managerId).get().getRole();
 
-        if (userRole == MANAGER) this.assignTask(userId, taskId);
-        else throw new IllegalArgumentException("Only managers can assign tasks");*/
-        int assignedTaskRow = this.userRepository.assignTask(userId, taskId);
+         if (userRole == MEMBER)
+             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only Managers can assign tasks");
+
+        // TODO: Return HTTP response based on the result of the operation
+
+        Integer assignedTaskRow = this.userRepository.assignTask(userId, taskId);
         return assignedTaskRow == 1 ? "TASK ASSIGNED SUCCESSFULLY" : "ERROR ASSIGNING TASK";
     }
 

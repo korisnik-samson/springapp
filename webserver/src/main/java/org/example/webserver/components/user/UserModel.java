@@ -22,12 +22,12 @@ import java.util.Set;
 @Setter
 @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id"})})
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "user_id" }) })
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    private Integer id;
 
     @Column(name = "first_name")
     private String firstName;

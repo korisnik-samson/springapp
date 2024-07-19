@@ -8,14 +8,14 @@ public interface SubtaskRepository extends JpaRepository<SubtaskModel, Integer> 
     @Modifying
     @Query(value = "UPDATE subtask SET title = :title, description = :description, status = :status " +
             "WHERE subtask_id = :id AND task_id = :taskId", nativeQuery = true)
-    int updateSubtask(Integer taskId, Integer id, String title, String description, String status);
+    Integer updateSubtask(Integer taskId, Integer id, String title, String description, String status);
 
     @Modifying
     @Query(value = "INSERT INTO subtask (task_id, title, description, status) " +
             "VALUES (:taskId, :title, :description, :status)", nativeQuery = true)
-    int createSubtask(Integer taskId, String title, String description, String status);
+    Integer createSubtask(Integer taskId, String title, String description, String status);
 
     @Modifying
     @Query(value = "DELETE FROM subtask WHERE task_id = :taskId AND subtask_id = :subtaskId", nativeQuery = true)
-    int deleteSubtask(Integer taskId, Integer subtaskId);
+    Integer deleteSubtask(Integer taskId, Integer subtaskId);
 }

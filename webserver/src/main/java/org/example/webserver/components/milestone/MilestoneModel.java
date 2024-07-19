@@ -15,7 +15,7 @@ public class MilestoneModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "milestone_id")
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "project_id")

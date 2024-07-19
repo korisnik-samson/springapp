@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,8 +15,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function ProjectForm() {
+    const { toast } = useToast();
+
+    // 1. Define form schema and setup form
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema),
         defaultValues: {
@@ -33,24 +40,14 @@ export function ProjectForm() {
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof ProjectSchema>) {
-        // submit and post to the server
-        // this is a dummy call
-        /*try {
-            const response = await fetch(process.env.CONNECTION_STRING!, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...values }),
-            })
+    const onSubmit = (values: z.infer<typeof ProjectSchema>) => {
+        console.log("Hello world")
 
-            const data = await response.json();
-            console.log({ data })
-
-        } catch (error) {
-            throw new Error('Error creating project');
-        }*/
-
-        console.log({ values })
+        toast({
+            title: 'Project Created',
+            description: `Project ${values.projectName} has been created successfully.`,
+            variant: 'default',
+        })
     }
 
     return (
@@ -73,7 +70,7 @@ export function ProjectForm() {
                         <FormItem>
                             <FormLabel>Project Description</FormLabel>
                             <FormControl>
-                                <Textarea {...field} rows={5}/>
+                                <Textarea {...field} rows={5} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -135,15 +132,25 @@ export function ProjectForm() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Project Status</FormLabel>
-                            <FormControl>
-                                <Input placeholder="shadcn" {...field} />
-                            </FormControl>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select the Porject Status" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value='NOT_STARTED'>Not Started</SelectItem>
+                                        <SelectItem value='IN_PROGRESS'>In Progress</SelectItem>
+                                        <SelectItem value='COMPLETED'>Completed</SelectItem>
+                                        <SelectItem value='BLOCKED'>Blocked</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className='w-full'>
-                    Submit
+                <Button className='w-full' type='submit'>
+                    Create Project
                 </Button>
             </form>
         </Form>

@@ -15,7 +15,7 @@ public class DeadlineModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deadline_id")
-    private int id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "project_id")

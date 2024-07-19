@@ -21,11 +21,11 @@ public class TaskService {
         return this.taskRepository.findAll();
     }
 
-    public Optional<TaskModel> getTaskById(int id) {
+    public Optional<TaskModel> getTaskById(Integer id) {
         return this.taskRepository.findById(id);
     }
 
-    public List<TaskModel> getTasksByUser(int userId) {
+    public List<TaskModel> getTasksByUser(Integer userId) {
         return this.taskRepository.findTasksByUser(userId);
     }
 
@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     @Transactional
-    public String updateTask(int id, TaskModel updatedTask) {
+    public String updateTask(Integer id, TaskModel updatedTask) {
         Optional<TaskModel> currentTask = this.taskRepository.findById(id);
         TaskModel finalTask = new TaskModel();
 
@@ -72,7 +72,7 @@ public class TaskService {
             finalTask.setActualHours(updatedTask.getActualHours());
         else finalTask.setActualHours(currentTask.get().getActualHours());
 
-        int updatedRows = this.taskRepository.updateTask(finalTask.getId(), finalTask.getTitle(), finalTask.getDescription(),
+        Integer updatedRows = this.taskRepository.updateTask(finalTask.getId(), finalTask.getTitle(), finalTask.getDescription(),
                 finalTask.getStatus().toString(), finalTask.getPriority().toString(), String.valueOf(finalTask.getStartDate()),
                 String.valueOf(finalTask.getDueDate()), finalTask.getEstimatedHours(), finalTask.getActualHours());
 
@@ -80,15 +80,15 @@ public class TaskService {
     }
 
     // permanent delete
-    public String deleteTask(int id) {
+    public String deleteTask(Integer id) {
         this.taskRepository.deleteById(id);
 
         return (this.taskRepository.findById(id).isPresent()) ? "ERROR DELETING TASK" : "TASK DELETED SUCCESSFULLY";
     }
 
     // soft delete
-    public String softDeleteTask(int id, IsObjectDeleted isDeleted) {
-        int deletedTask = this.taskRepository.softDeleteTask(id, String.valueOf(isDeleted));
+    public String softDeleteTask(Integer id, IsObjectDeleted isDeleted) {
+        Integer deletedTask = this.taskRepository.softDeleteTask(id, String.valueOf(isDeleted));
         return deletedTask > 0 ? "TASK DELETED SUCCESSFULLY" : "ERROR DELETING TASK";
     }
 }

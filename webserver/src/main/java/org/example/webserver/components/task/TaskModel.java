@@ -29,7 +29,7 @@ public class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
-    private int id;
+    private Integer id;
 
     @Column(name = "task_title")
     private String title;
@@ -50,10 +50,10 @@ public class TaskModel {
     private Date dueDate;
 
     @Column(name = "task_estimated_hours")
-    private int estimatedHours;
+    private Integer estimatedHours;
 
     @Column(name = "task_actual_hours")
-    private int actualHours;
+    private Integer actualHours;
 
     @OneToMany(mappedBy = "task")
     private Set<SubtaskModel> subtasks = new HashSet<>();

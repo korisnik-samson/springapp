@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping(path = "api/user/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody UserModel user) {
+    public ResponseEntity<String> updateUser(@PathVariable("id") Integer id, @RequestBody UserModel user) {
         return ResponseEntity.ok(this.userService.updateUser(id, user));
     }
 
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping(path = "api/user/task/{id}")
-    public Optional<List<UserModel>> getUsersByTask(@PathVariable("id") int taskId) {
+    public Optional<List<UserModel>> getUsersByTask(@PathVariable("id") Integer taskId) {
         return this.userService.findUsersByTask(taskId);
     }
 
@@ -79,10 +79,13 @@ public class UserController {
         return ResponseEntity.ok(this.userService.softDelete(id, isDeleted));
     }
 
-    // TODO: Verify this
-    @PutMapping("api/task/assign/{user_id}/{task_id}")
-    public ResponseEntity<String> assignTask(@PathVariable("user_id") int userId, @PathVariable("task_id") int taskId) {
-        String message = userService.assignTask(userId, taskId);
-        return ResponseEntity.ok(message);
+    // TODO: Verify this bro
+    @PutMapping("api/task/assign/{parent_user_id}/{user_id}/{task_id}")
+    public ResponseEntity<String> assignTask(@PathVariable("parent_user_id") Integer managerId, @PathVariable("user_id") Integer userId,
+                                                @PathVariable("task_id") Integer taskId) {
+        String message = userService.assignTask(managerId, userId, taskId);
+
+        if (message.equals("TASK ASSIGNED SUCCESSFULLY")) return ResponseEntity.ok(message);
+        else return ResponseEntity.badRequest().body(message);
     }
 }

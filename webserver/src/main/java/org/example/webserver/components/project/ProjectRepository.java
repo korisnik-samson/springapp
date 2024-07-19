@@ -14,5 +14,5 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, Integer> 
     @Query(value = "UPDATE project SET project_name = :projectName, project_description = :projectDescription, " +
             "project_start_date = :projectStartDate, project_end_date = :projectDueDate, project_status = :projectStatus" +
             " WHERE project_id = :projectId", nativeQuery = true)
-    int updateProject(Integer projectId, String projectName, String projectDescription, String projectStartDate, String projectDueDate, String projectStatus);
+    Integer updateProject(Integer projectId, String projectName, String projectDescription, String projectStartDate, String projectDueDate, String projectStatus);
 }

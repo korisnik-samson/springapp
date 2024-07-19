@@ -15,7 +15,7 @@ public class DependencyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dependency_id")
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "task_id")

@@ -6,13 +6,14 @@ import { Plus } from "lucide-react";
 
 const CreateProjectButton = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const onClick = () => console.log('clicked')
 
     return (
         <Dialog open={isOpen} onOpenChange={(visible) => {
             if (!visible) setIsOpen(visible)
         }}>
             <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-                <Button className="w-[150]" onClick={() => {}}>
+                <Button type="button" className="w-[150]" onClick={onClick}>
                     Create Project <Plus className="ml-2 h-5 w-5" />
                 </Button>
             </DialogTrigger>

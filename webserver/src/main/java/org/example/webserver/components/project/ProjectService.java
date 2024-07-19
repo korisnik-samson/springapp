@@ -66,4 +66,5 @@ public class ProjectService {
 
         return updatedProjectRow > 0 ? "PROJECT UPDATED SUCCESSFULLY" : "PROJECT UPDATE FAILED";
     }
+
 }

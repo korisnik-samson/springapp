@@ -1,6 +1,5 @@
 package org.example.webserver.components.user;
 
-import org.example.webserver.lib.types.IsObjectDeleted;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,11 +18,12 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
     @Modifying
     @Query(value = "UPDATE user SET first_name = :firstName, last_name = :lastName, user_name = :userName, " +
             "user_email = :email, user_password = :password, user_role = :role WHERE user_id = :id", nativeQuery = true)
-    int updateUser(@Param("id")int id, @Param("firstName")String firstName, @Param("lastName")String lastName, @Param("userName")String userName,
-                    @Param("email")String email, @Param("password")String password, @Param("role")String role);
+    Integer updateUser(@Param("id")Integer id, @Param("firstName")String firstName, @Param("lastName")String lastName,
+                       @Param("userName")String userName, @Param("email")String email,
+                @Param("password")String password, @Param("role")String role);
 
     @Query(value = "SELECT * FROM user WHERE user_id IN (SELECT user_id FROM user_task WHERE task_id = :id)", nativeQuery = true)
-    Optional<List<UserModel>> findUsersByTask(@Param("id") int taskId);
+    Optional<List<UserModel>> findUsersByTask(@Param("id") Integer taskId);
     
     @Query(value = "SELECT * FROM user WHERE user_role = 'MEMBER'", nativeQuery = true)
     List<UserModel> findMembers();
@@ -33,10 +33,10 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
 
     @Modifying
     @Query(value = "UPDATE user SET user.is_deleted = :isObjectDeleted WHERE user.user_id = :id", nativeQuery = true)
-    int softDelete(@Param("id") Integer id, @Param("isObjectDeleted") String isObjectDeleted);
+    Integer softDelete(@Param("id") Integer id, @Param("isObjectDeleted") String isObjectDeleted);
 
     // TODO: Verify implementation
     @Modifying
     @Query(value = "INSERT INTO user_task (user_id, task_id) VALUES (:userId, :taskId)", nativeQuery = true)
-    int assignTask(@Param("userId") int userId, @Param("taskId") int taskId);
+    Integer assignTask(@Param("userId") Integer userId, @Param("taskId") Integer taskId);
 }
