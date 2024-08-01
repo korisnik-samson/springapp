@@ -19,6 +19,7 @@ public interface TaskRepository extends JpaRepository<TaskModel, Integer> {
             @Param("status")String status, @Param("priority")String priority, @Param("startDate")String startDate,
             @Param("dueDate")String dueDate, @Param("estimatedHours")Integer estimatedHours, @Param("actualHours")Integer actualHours);
 
+    // Todo: field could be set to NULL
     @Modifying
     @Query(value = "UPDATE task SET is_deleted = :isDeleted WHERE task_id = :id", nativeQuery = true)
     Integer softDeleteTask(@Param("id") Integer id, @Param("isDeleted") String isDeleted);
