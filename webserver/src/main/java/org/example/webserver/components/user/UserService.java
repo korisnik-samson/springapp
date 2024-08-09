@@ -9,12 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
-import static org.example.webserver.lib.types.UserRole.MANAGER;
 import static org.example.webserver.lib.types.UserRole.MEMBER;
 
 @Service
@@ -111,7 +108,7 @@ public class UserService {
         else finalUser.setRole(currentUser.get().getRole());
 
         int updatedRow = this.userRepository.updateUser(finalUser.getId(), finalUser.getFirstName(), finalUser.getLastName(),
-                finalUser.getEmail(), finalUser.getUserName(), finalUser.getPassword(), String.valueOf(finalUser.getRole()));
+                finalUser.getEmail(), finalUser.getUserName(), finalUser.getPassword(), finalUser.getRole().name());
 
         return updatedRow == 1 ? "USER UPDATED SUCCESSFULLY" : "ERROR UPDATING USER";
     }
@@ -124,7 +121,7 @@ public class UserService {
     public String assignTask(Integer managerId, Integer userId, Integer taskId) {
          UserRole userRole = this.getUserById(managerId).get().getRole();
 
-         if (userRole == MEMBER)
+         if (userRole == MEMBER || userRole.name().equals("MEMBER"))
              throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only Managers can assign tasks");
 
         // TODO: Return HTTP response based on the result of the operation
@@ -139,7 +136,7 @@ public class UserService {
             () -> new ObjectNotFoundException(id, "UserModel")
         );
 
-        int deletedRows = this.userRepository.softDelete(id, String.valueOf(isDeleted));
+        int deletedRows = this.userRepository.softDelete(id, isDeleted.name());
 
         user.setIsDeleted(isDeleted);
         this.userRepository.save(user);

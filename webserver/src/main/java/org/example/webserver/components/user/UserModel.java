@@ -11,6 +11,8 @@ import org.example.webserver.components.task.TaskModel;
 import org.example.webserver.lib.Encoder;
 import org.example.webserver.lib.types.IsObjectDeleted;
 import org.example.webserver.lib.types.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;
