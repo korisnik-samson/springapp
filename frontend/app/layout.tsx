@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-import { NextFont } from "next/dist/compiled/@next/font";
-
-const outfit: NextFont = Outfit({ subsets: ["latin"] });
+import { GeistSans } from "geist/font/sans";
 
 export const metadata: Metadata = {
     title: "Intelli",
@@ -16,7 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={outfit.className}>
+                <body className={GeistSans.className}>
                     {children}
                 </body>
             </html>
